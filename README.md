@@ -1,24 +1,12 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A private event project in The Odin Project Rails Path.
+Authentication of user is included by using devise gem.
 
-Things you may want to cover:
+- Ruby version
 
-* Ruby version
+* 3.4.2
 
-* System dependencies
+- Rails version
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* 8.0.3
