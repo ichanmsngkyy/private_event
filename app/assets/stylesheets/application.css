@@ -8,3 +8,12 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+.form_field {
+  margin-bottom: 15px;
+}
+
+.submit-button {
+  margin-top: 20px;
+  padding: 10px;
+}

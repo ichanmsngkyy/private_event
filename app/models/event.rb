@@ -1,5 +1,3 @@
 class Event < ApplicationRecord
-  def index
-    @event = Event.all
-  end
+  belongs_to :creator, foreign_key: "creator_id", class_name: "User"
 end

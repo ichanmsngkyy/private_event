@@ -1,0 +1,13 @@
+<h2>All Events</h2>
+
+<%if @event.any?%>
+    <ul>
+    <% @event.each do |event|%>
+        <li><%= event.title%> - <%= event.events_date.strftime("%B, %d, %Y") if event.events_date%> </li>
+    <%end%>
+    </ul>
+<%else%>
+    <p>No events yet.</p>
+<%end%>
+
+<%= link_to "Create Events", new_event_path%>
