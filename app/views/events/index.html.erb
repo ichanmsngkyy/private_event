@@ -1,5 +1,7 @@
 <h2>All Events</h2>
-
+<h3><%= link_to "Profile", user_path(current_user)%></h3>
+<h3><%= link_to "Create Events", new_event_path%></h3>
+<h3><%= link_to "Invitations", invitations_path%></h3>
 <%if @event.any?%>
     <ul>
     <% @event.each do |event|%>
@@ -10,4 +12,4 @@
     <p>No events yet.</p>
 <%end%>
 
-<%= link_to "Create Events", new_event_path%>
+

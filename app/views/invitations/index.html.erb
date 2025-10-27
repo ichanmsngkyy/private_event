@@ -1,0 +1,20 @@
+<h2>Your Invitations</h2>
+
+<% if @invitations.any?%>
+<ul>
+    <% @invitations.each do |invitation|%>
+    <li>
+        <strong><%= invitation.event.title %></strong>
+        - <%= invitation.event.events_date.strftime("%B %d, %Y") if invitation.event.events_date %>
+        <br>
+        Invited by: <%= invitation.event.creator.email %>
+        <br>
+        <%= button_to "Accept", accepted_invitation_path(invitation), method: :patch %>
+        <%= button_to "Decline", declined_invitation_path(invitation), method: :patch %>
+    </li>
+ <% end %>
+  </ul>
+<% else %>
+  <p>No pending invitations.</p>
+<% end %>
+

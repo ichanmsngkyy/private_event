@@ -1,6 +1,12 @@
 class EventAttendeesController < ApplicationController
   before_action :authenticate_user!
 
+  def show
+  @event = Event.find(params[:id])
+  @event_attendee = @event.event_attendees.find_by(user_id: current_user.id)
+end
+
+
   def create
     @event = Event.find(params[:event_id])
 

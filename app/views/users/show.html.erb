@@ -1,8 +1,13 @@
 
 
+<h3><%=link_to "All Events", events_path %></h3>
+<h3><%=link_to "Create Events", new_event_path %></h3>
+<h3><%= link_to "Invitations", invitations_path%></h3>
+<h3><%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete } %></h3>
 <h2>Events Created</h2>
 
 <ul>
+
 <%@user.created_events.each do |event|%>
     <li><%=link_to event.title, event_path(event)%>
     <%= event.events_date.strftime("%B, %d, %Y") if event.events_date%>
@@ -11,13 +16,11 @@
 </ul>
 
 <% if @user.attended_events.any? %>
-<% upcoming_events = @user.attended_events.where("events_date >= ?", Date.today) %>
-<% past_events = @user.attended_events.where("events_date < ?", Date.today) %>
 
     <h2>Upcoming Events: </h2>
-<%if upcoming_events.any?%>
+<%if @upcoming_events.any?%>
     <ul>
-        <% @user.attended_events.each do |event|%>
+        <% @upcoming_events.each do |event|%>
     <li>
         <%= link_to event.title, event_path(event) %>
         <%= event.events_date.strftime("%B, %d, %Y") if event.events_date %>
@@ -29,9 +32,9 @@
 <%end%>
 
     <h2>Past Events: </h2>
-<% if past_events.any?%>
+<% if @past_events.any?%>
     <ul>
-        <% @user.attended_events.each do |event|%>
+        <% @past_events.each do |event|%>
     <li>
         <%= link_to event.title, event_path(event) %>
         <%= event.events_date.strftime("%B, %d, %Y") if event.events_date %>

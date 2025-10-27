@@ -1,4 +1,7 @@
 <h2><%= @event.title%></h2>
+<h3><%= link_to "Profile", user_path(current_user)%></h3>
+<h3><%= link_to "Create Events", new_event_path%></h3>
+<h3><%= link_to "Invitations", invitations_path%></h3>
 <%= @event.creator.email%>
 
 <div>
@@ -23,14 +26,40 @@
 </div>
 
 <div>
-   <% if user_signed_in?%>
-    <% if current_user == @event.creator%>
-    <p>You created this event!</p>
-    <% elsif @event.attendees.include?(current_user)%>
-    <%= button_to "Cancel Attendance", event_attendee_path(@event_attende), method: :delete%>
-    <%else %>
-    <%= button_to "Attend Event", event_attendee_path(event_id: @event.id), method: :post%>
-    <%end%>
-   <%end%>
+  <% if user_signed_in? %>
+    <% if current_user == @event.creator %>
+      <p>You created this event!</p>
+    <% else %>
+      <% attendee_record = EventAttendee.find_by(event: @event, attendee: current_user) %>
+
+      <% if attendee_record.present? %>
+        <%= button_to "Cancel Attendance", event_attendee_path(attendee_record), method: :delete %>
+      <% else %>
+        <%= button_to "Attend Event", event_attendees_path(event_id: @event.id), method: :post %>
+      <% end %>
+    <% end %>
+  <% end %>
 </div>
+
+<div>
+    <% if user_signed_in? && current_user == @event.creator %>
+  <h3>Invite Users</h3>
+  
+  <%= form_with url: invitations_path, method: :post do |form| %>
+    <%= form.hidden_field :event_id, value: @event.id %>
+    
+    <%= form.select :invitee_id, User.where.not(id: @event.creator.id).map { |u| [u.email, u.id] } %>
+    
+    <%= form.submit "Send Invitation" %>
+  <% end %>
+<% end %>
+</div>
+
+<% if user_signed_in? && current_user == @event.creator %>
+  <%= button_to "Toggle to #{@event.private_event? ? 'Public' : 'Private'}", 
+                toggle_visibility_event_path(@event), 
+                method: :patch %>
+<% end %>
+
+<h3><%= link_to "Edit Event", edit_event_path%></h3>
 
