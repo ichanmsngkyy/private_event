@@ -1,0 +1,36 @@
+<h2><%= @event.title%></h2>
+<%= @event.creator.email%>
+
+<div>
+    <h4>Information:</h4>
+    <p><%= @event.body%></p>
+    <p><%= @event.events_date.strftime("%B, %d, %Y") if @event.events_date%></p>
+</div>
+
+<div>
+    <h4>Attendees:</h4>
+    <%if @event.attendees.any?%>
+    <ul>
+    <% @event.attendees.each do |attendee|%>
+        <li>
+            <%= attendee.email%>
+        </li>
+        <%end%>
+    </ul>
+    <%else%>
+    <p> No Attendee Yet</p>
+    <%end%>
+</div>
+
+<div>
+   <% if user_signed_in?%>
+    <% if current_user == @event.creator%>
+    <p>You created this event!</p>
+    <% elsif @event.attendees.include?(current_user)%>
+    <%= button_to "Cancel Attendance", event_attendee_path(@event_attende), method: :delete%>
+    <%else %>
+    <%= button_to "Attend Event", event_attendee_path(event_id: @event.id), method: :post%>
+    <%end%>
+   <%end%>
+</div>
+

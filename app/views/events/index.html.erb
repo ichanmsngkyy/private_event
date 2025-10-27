@@ -3,7 +3,7 @@
 <%if @event.any?%>
     <ul>
     <% @event.each do |event|%>
-        <li><%= event.title%> - <%= event.events_date.strftime("%B, %d, %Y") if event.events_date%> </li>
+        <li><%=link_to event.title, event_path(event)%> - <%= event.events_date.strftime("%B, %d, %Y") if event.events_date%> </li>
     <%end%>
     </ul>
 <%else%>
